@@ -5,89 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 6 - Contact Book (API's)</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Basic styling */
-        body {
-          font-family: Arial, sans-serif;
-          background: #f4f4f4;
-          margin: 0;
-          padding: 0;
-        }
-    
-        header {
-          background: #333;
-          color: white;
-          padding: 1rem;
-          text-align: center;
-        }
-    
-        .container {
-          padding: 20px;
-          max-width: 800px;
-          margin: auto;
-        }
-    
-        .page {
-          display: none;
-        }
-    
-        .active {
-          display: block;
-        }
-    
-        .contacts-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-          gap: 15px;
-          margin-top: 20px;
-        }
-    
-        .contacts-card {
-          background: white;
-          padding: 15px;
-          border-radius: 10px;
-          box-shadow: 0 0 5px rgba(0,0,0,0.1);
-        }
-    
-        .contact-avatar {
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-        }
-    
-        .contact-name {
-          font-weight: bold;
-          margin-top: 10px;
-        }
-    
-        .contact-details p {
-          margin: 5px 0;
-        }
-    
-        .contact-actions {
-          margin-top: 10px;
-        }
-    
-        .btn {
-          padding: 6px 12px;
-          margin: 4px 2px;
-          cursor: pointer;
-          border: none;
-          border-radius: 5px;
-        }
-    
-        .btn-primary { background-color: #28a745; color: white; }
-        .btn-secondary { background-color: #007bff; color: white; }
-        .btn-danger { background-color: #dc3545; color: white; }
-    
-        form input, form button {
-          display: block;
-          width: 100%;
-          margin-bottom: 10px;
-          padding: 8px;
-        }
-      </style>
-   </head>
+   
 <body onload="checkApi()">
     <form id="addContactForm" onsubmit="addContact(event)"></form>
     <form id="editContactsPage" onsubmit="updateContact(event)"></form>    
@@ -113,7 +31,7 @@
 
                 </div>
 
-                <button class="btn" onclick="setupApiKey()">🚀Rock Start using Contact Book</button>
+                <button class="btn" onclick="setApiKey()">🚀Rock Start using Contact Book</button>
 
             </div>
 
@@ -136,7 +54,7 @@
         </div>
 
         <!-- Add Contact Page -->
-        <div id="addContactsPage" class="page">
+        <div id="addContactPage" class="page">
             <button class="btn btn-secondary back-btn" onclick="showContacts()">← Back to Contacts</button>
 
             <h2>Add New Contact</h2>
@@ -169,12 +87,14 @@
         </div>
 
             <!-- Edit Contact Page -->
-            <div id="editContactsPage" class="page">
+            <div id="editContactPage" class="page">
                <button class="btn btn-secondary back-btn" onclick="showContacts()">Back to Contacts</button>
 
                <h2>Edit Contact</h2>
+                
+               <div id="editAvatarImage" style="text-align: center; margin-bottom: 20px;"></div>
 
-                <form id="editContactsPage" onsubmit="updateContact(event)">
+                <form id="editContactPage" onsubmit="updateContact(event)">
                    <input type="hidden" id="editContactId">
 
                   <div class="form-group">
