@@ -15,7 +15,7 @@ function checkApi() {
 }
 
 // Set the API Key and store it 
-function setupApiKey(){
+function setApiKey(){
     const inputApiKey = document.getElementById('apiKeyInput').value.trim();
 
     if (!inputApiKey){
@@ -29,10 +29,10 @@ function setupApiKey(){
           return response.text();
        })
        .then(function(data) {
-          if (data == "1") {
+          if (data === "1") {
             apiKey = inputApiKey;
             localStorage.setItem("apiKey", apiKey);
-            showContacts();
+            showContact();
             getContacts();
           }else {
             alert("Invalid API key entered!");
@@ -60,10 +60,11 @@ function showAddContacts() {
     showPages('addContactPage');
     // Clear the form
     document.getElementById('addContactForm').reset();
+    alert("Contact added successfully!")
 }
 
 function showEditContact(contactId) {
-    showPages('editContactsPage')
+    showPages('editContactPage')
     // Load contact data for editing
     loadContactForEdit(contactId);
 }
@@ -99,8 +100,8 @@ function displayContacts(contacts) {
         const contact = contacts[i];
     
         let avatarSrc = contact.avatar ?
-        `${rootPath}controller/uploadds/${contact.avatar}`:
-        `https://ui-avatars.com/api/?name=${contact.firstname}+${contact.lastname}&background=ff6b6b&color=fff&size=120`;
+        `${rootPath}controller/uploads/${contact.avatar}`:
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(contact.firstname + '' + contact.lastname)}&background=ff6b6b&color=fff&size=120`;
 
                 html += `
                     <div class="contact-card">
@@ -141,9 +142,9 @@ function addContact(event) {
         return response.text();
     })
     .then(function(data){
-        if (data == "1") {
-            alert("Contac added successfully!");
-            showContacts();
+        if (data === "1") {
+            alert("Contact added successfully!");
+            showContact();
             getContacts();
         } else {
             alert('Error adding contact:'+ data);
@@ -165,14 +166,14 @@ function loadContactForEdit(contactId) {
 
             //Show avatar if available
             if (contact.avatar) {
-                const avatarImg = `<img src="${rootPath}controller/uploads/${contact.avatar} width=200 style="border-radius: 10px;"/>`;
+                const avatarImg = `<img src="${rootPath}controller/uploads/${contact.avatar}" width=200 style="border-radius: 10px;"/>`;
                 document.getElementById("editAvatarImage").innerHTML = avatarImg;
             } else {
                 document.getElementById('editAvatarImage').innerHTML = '';
             }
 
             document.getElementById('editContactId').value = contact.id;
-            document.getElementById("editFirtName").value = contact.firstname;
+            document.getElementById("editFirstName").value = contact.firstname;
             document.getElementById("editLastName").value = contact.lastname;
             document.getElementById("editMobile").value = contact.mobile;
             document.getElementById("editEmail").value = contact.email;
@@ -180,7 +181,7 @@ function loadContactForEdit(contactId) {
        })
        .catch(function (error){
           alert('Error loading contact details.');
-          showContacts();
+          showContact();
        })
 }
 
@@ -204,7 +205,7 @@ function updateContact(event){
         .then(function (data){
             if (data == "1") {
                 alert("Contact updated successfully!");
-                showContacts();
+                showContact();
                 getContacts();
             } else {
                 alert('Error updating contact:' + data);
@@ -238,7 +239,7 @@ function deleteContact(contactId) {
 }
 
 window.onload = function() {
-    checkApiKey();
+    checkApi();
 };
 
 
